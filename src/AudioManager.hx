@@ -190,7 +190,10 @@ class AudioManager {
 	*/
 	public function resumeContext() {
 		if (audioContext != null && audioContext.state != null && audioContext.resume != null) {
+			audioContext.suspend();
 			audioContext.resume();
+//			audioContext.resume();
+//			audioContext.resume();
 		}
 	}
 }
