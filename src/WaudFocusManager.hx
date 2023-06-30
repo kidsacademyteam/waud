@@ -55,6 +55,7 @@ import js.Browser;
 
 		if (dom == null) dom = Browser.document;
 		_dom = dom;
+		_dom = Browser.window;		// in chrome (safari/FF are ok) document doesn't fire blur/focus events on browser minimize/maximize
 
 		if (_dom.hidden != null) {
 			_hidden = "hidden";
@@ -115,6 +116,7 @@ import js.Browser;
 	* @method _focus
 	*/
 	function _focus() {
+trace('WaudFocusManager: _focus');
 		if (_currentState != FOCUS_STATE && focus != null) focus();
 		_currentState = FOCUS_STATE;
 	}
@@ -126,6 +128,7 @@ import js.Browser;
 	* @method _blur
 	*/
 	function _blur() {
+trace('WaudFocusManager: __blur');
 		if (_currentState != BLUR_STATE && blur != null) blur();
 		_currentState = BLUR_STATE;
 	}
