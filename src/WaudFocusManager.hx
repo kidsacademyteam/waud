@@ -116,7 +116,6 @@ import js.Browser;
 	* @method _focus
 	*/
 	function _focus() {
-trace('WaudFocusManager: _focus');
 		if (_currentState != FOCUS_STATE && focus != null) focus();
 		_currentState = FOCUS_STATE;
 	}
@@ -128,7 +127,6 @@ trace('WaudFocusManager: _focus');
 	* @method _blur
 	*/
 	function _blur() {
-trace('WaudFocusManager: __blur');
 		if (_currentState != BLUR_STATE && blur != null) blur();
 		_currentState = BLUR_STATE;
 	}
