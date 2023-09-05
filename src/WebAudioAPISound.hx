@@ -1,10 +1,10 @@
 import js.Browser;
-import js.html.Uint8Array;
-import js.html.ArrayBuffer;
-import js.html.XMLHttpRequestResponseType;
-import js.html.XMLHttpRequest;
-import js.html.audio.AudioBufferSourceNode;
 import js.html.audio.AudioBuffer;
+import js.html.audio.AudioBufferSourceNode;
+import js.html.XMLHttpRequest;
+import js.html.XMLHttpRequestResponseType;
+import js.lib.ArrayBuffer;
+import js.lib.Uint8Array;
 
 @:keep class WebAudioAPISound extends BaseSound implements IWaudSound {
 
