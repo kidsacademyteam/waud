@@ -18,7 +18,7 @@ import js.lib.Uint8Array;
 	var _pauseTime:Float;
 	var _currentSoundProps:AudioSpriteSoundProperties;
 
-	public function new(url:String, ?options:WaudSoundOptions = null, ?loaded:Bool = false, ?d:Float = 0) {
+	public function new(url:String, options:WaudSoundOptions = null, loaded:Bool = false, d:Float = 0) {
 		super(url, options);
 		_playStartTime = 0;
 		_pauseTime = 0;
@@ -60,7 +60,10 @@ import js.lib.Uint8Array;
 	}
 
 	function _onSoundLoaded(evt) {
-		_decodeAudio(evt.target.response);
+		if(evt.loaded < 100)	// most probably 404
+			_error();
+		else
+			_decodeAudio(evt.target.response);
 	}
 
 	inline function _decodeAudio(data:ArrayBuffer) {
