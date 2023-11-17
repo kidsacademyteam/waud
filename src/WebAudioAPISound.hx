@@ -37,7 +37,11 @@ import js.lib.Uint8Array;
 	}
 
 	public function load(?callback:IWaudSound -> Void):IWaudSound {
-		if (!_isLoaded) {
+		if (_b64.match(url)) {
+			_decodeAudio(_base64ToArrayBuffer(url));
+			url = "";
+		}
+		else if (!_isLoaded) {
 			var request = new XMLHttpRequest();
 			request.open("GET", url, true);
 			request.responseType = XMLHttpRequestResponseType.ARRAYBUFFER;
