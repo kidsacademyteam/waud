@@ -37,6 +37,8 @@ import js.lib.Uint8Array;
 	}
 
 	public function load(?callback:IWaudSound -> Void):IWaudSound {
+		if (callback != null) _options.onload = callback;
+
 		if (_b64.match(url)) {
 			_decodeAudio(_base64ToArrayBuffer(url));
 			url = "";
@@ -48,8 +50,6 @@ import js.lib.Uint8Array;
 			request.onload = _onSoundLoaded;
 			request.onerror = _error;
 			request.send();
-
-			if (callback != null) _options.onload = callback;
 		}
 
 		return this;
