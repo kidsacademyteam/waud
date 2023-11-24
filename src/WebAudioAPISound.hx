@@ -31,7 +31,7 @@ import js.lib.Uint8Array;
 
 		if (_b64.match(url)) {
 			_decodeAudio(_base64ToArrayBuffer(url));
-			url = "";
+			url = Std.string(haxe.crypto.Crc32.make(haxe.io.Bytes.ofString(url)));
 		}
 		else if (_options.preload && !loaded) load();
 	}
@@ -41,7 +41,7 @@ import js.lib.Uint8Array;
 
 		if (_b64.match(url)) {
 			_decodeAudio(_base64ToArrayBuffer(url));
-			url = "";
+			url = Std.string(haxe.crypto.Crc32.make(haxe.io.Bytes.ofString(url)));
 		}
 		else if (!_isLoaded) {
 			var request = new XMLHttpRequest();
