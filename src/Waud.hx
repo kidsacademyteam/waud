@@ -13,6 +13,8 @@ import js.Browser;
 	static inline var PROBABLY:String = "probably";
 	static inline var MAYBE:String = "maybe";
 
+	static var SILENT_SOUND:WaudSound = null;
+
 	/**
 	* Version number.
 	*
@@ -290,7 +292,30 @@ import js.Browser;
 	*/
 	public static function enableTouchUnlock(?callback:Void -> Void) {
 		__touchUnlockCallback = callback;
-		dom.ontouchend = Waud.audioManager.unlockAudio;
+		var onTouch:(Dynamic) -> Void = null;
+		onTouch = function (e):Void {
+			playSilentSound();
+			dom.removeEventListener("click", onTouch);
+			if (__touchUnlockCallback != null) {
+				__touchUnlockCallback();
+			}
+		}
+		playSilentSound();
+		dom.addEventListener("click", onTouch);
+	}
+
+	private static function playSilentSound():Void {
+		if (SILENT_SOUND == null) {
+			SILENT_SOUND = new WaudSound(
+			"data:audio/mpeg;base64,SUQzBAAAAAAAI1RTU0UAAAAPAAADTGF2ZjU4Ljc2LjEwMAAAAAAAAAAAAAAA/+M4wAAAAAAAAAAAAEluZm8AAAAPAAAAAwAAAbAAqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV////////////////////////////////////////////AAAAAExhdmM1OC4xMwAAAAAAAAAAAAAAACQDkAAAAAAAAAGw9wrNaQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/+MYxAAAAANIAAAAAExBTUUzLjEwMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV/+MYxDsAAANIAAAAAFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV/+MYxHYAAANIAAAAAFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV",
+			{loop: true, autoplay: true});
+
+			SILENT_SOUND.load(function(sound:IWaudSound) {
+				sound.play();
+			});
+		} else {
+			SILENT_SOUND.play();
+		}
 	}
 
 	/**
