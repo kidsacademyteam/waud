@@ -296,12 +296,15 @@ import js.Browser;
 		onTouch = function (e):Void {
 			playSilentSound();
 			dom.removeEventListener("click", onTouch);
-			if (__touchUnlockCallback != null) {
+			dom.removeEventListener("touchstart", onTouch);
+			if (__touchUnlockCallback != null)
 				__touchUnlockCallback();
-			}
+
+			__touchUnlockCallback = null;
 		}
 		playSilentSound();
 		dom.addEventListener("click", onTouch);
+		dom.addEventListener("touchstart", onTouch);	// on iOS 15 click event doesn't fire for some reason...
 	}
 
 	private static function playSilentSound():Void {
